@@ -38,7 +38,8 @@ services:
       TMDB_API_KEY: ${TMDB_API_KEY}
       JWT_SECRET: ${JWT_SECRET:-super-secret-jwt-key-change-me}
       SECRET_KEY: ${SECRET_KEY:-super-secret-app-key-change-me}
-      CORS_ORIGINS: http://localhost:${FRONTEND_PORT:-3000},http://localhost
+      DOMAIN: ${DOMAIN:-}
+      FRONTEND_PORT: ${FRONTEND_PORT:-3000}
     ports:
       - "${BACKEND_PORT:-5000}:5000"
     depends_on:

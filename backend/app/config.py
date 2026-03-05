@@ -23,8 +23,20 @@ class Config:
     # Redis
     REDIS_URL = os.getenv("REDIS_URL", "")
 
-    # CORS
-    CORS_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:5173")
+    # CORS — built dynamically from DOMAIN and FRONTEND_PORT
+    @staticmethod
+    def _build_cors_origins():
+        origins = []
+        port = os.getenv("FRONTEND_PORT", "3000")
+        origins.append(f"http://localhost:{port}")
+        origins.append("http://localhost")
+        domain = os.getenv("DOMAIN", "")
+        if domain:
+            origins.append(f"https://{domain}")
+            origins.append(f"http://{domain}")
+        return ",".join(origins)
+
+    CORS_ORIGINS = _build_cors_origins.__func__()
 
     # Rate limiting
     RATELIMIT_DEFAULT = "200/hour"
